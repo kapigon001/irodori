@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omoro Theory（オモロ理論）- irodori</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #24292f;
+            --heading-color: #1f2328;
+            --link-color: #0969da;
+            --border-color: #d0d7de;
+            --code-bg: #f6f8fa;
+            --blockquote-border: #d0d7de;
+            --blockquote-text: #57606a;
+            --table-border: #d0d7de;
+            --table-header-bg: #f6f8fa;
+            --accent-color: #0969da;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--heading-color);
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 2em;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 1.5em;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.25em;
+        }
+
+        h4 {
+            font-size: 1em;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Lists */
+        ul, ol {
+            padding-left: 2em;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        li + li {
+            margin-top: 4px;
+        }
+
+        /* Code */
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 85%;
+            background-color: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 16px;
+            overflow: auto;
+            border-radius: 6px;
+            line-height: 1.45;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            font-size: 85%;
+        }
+
+        /* Blockquote */
+        blockquote {
+            margin: 0 0 16px 0;
+            padding: 0 1em;
+            color: var(--blockquote-text);
+            border-left: 4px solid var(--blockquote-border);
+        }
+
+        blockquote > :first-child {
+            margin-top: 0;
+        }
+
+        blockquote > :last-child {
+            margin-bottom: 0;
+        }
+
+        /* Tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 16px;
+            overflow: auto;
+            display: block;
+        }
+
+        table th, table td {
+            padding: 8px 16px;
+            border: 1px solid var(--table-border);
+            text-align: left;
+        }
+
+        table th {
+            background-color: var(--table-header-bg);
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background-color: var(--code-bg);
+        }
+
+        /* Horizontal Rule */
+        hr {
+            height: 0.25em;
+            padding: 0;
+            margin: 24px 0;
+            background-color: var(--border-color);
+            border: 0;
+        }
+
+        /* Strong & Emphasis */
+        strong {
+            font-weight: 600;
+        }
+
+        /* Mermaid */
+        .mermaid {
+            text-align: center;
+            margin: 24px 0;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: white;
+            border: none;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin: 16px 0 0 0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            background-color: var(--code-bg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer p {
+            margin: 8px 0;
+            color: var(--blockquote-text);
+        }
+
+        /* Table of Contents */
+        .toc {
+            background-color: var(--code-bg);
+            padding: 20px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+            font-size: 1.2em;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc ul ul {
+            padding-left: 1.5em;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Print styles */
+        @media print {
+            .header {
+                background: none;
+                color: var(--text-color);
+            }
+            .header h1 {
+                color: var(--heading-color);
+            }
+            .mermaid {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .header {
+                padding: 40px 15px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            table {
+                font-size: 14px;
+            }
+            table th, table td {
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Omoro Theory（オモロ理論）</h1>
+        <p>「おもろい」を起点とした組織変革の理論体系</p>
+    </div>
+
+    <div class="container">
+        <div class="toc">
+            <h2>目次</h2>
+            <ul>
+                <li><a href="#executive-summary">Executive Summary</a></li>
+                <li><a href="#1-理論の背景と問題意識">1. 理論の背景と問題意識</a></li>
+                <li><a href="#2-既存理論との比較分析">2. 既存理論との比較分析</a></li>
+                <li><a href="#3-omoro-theoryの理論体系">3. Omoro Theoryの理論体系</a></li>
+                <li><a href="#4-学術的根拠と正当化">4. 学術的根拠と正当化</a></li>
+                <li><a href="#5-実践への応用">5. 実践への応用</a></li>
+                <li><a href="#6-結論">6. 結論</a></li>
+            </ul>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <div class="footer">
+        <p><strong>irodori</strong> - 中堅社員向けBtoB研修事業</p>
+        <p>「おもろい」から始まる組織変革を、共に実現しましょう。</p>
+    </div>
+
+    <script>
+        // Markdown content
+        const markdown = `
+## Executive Summary
+
+本レポートは、B2B研修領域における新たな理論体系「Omoro Theory（オモロ理論）」を提示する。
+
+### 「おもろい」の定義
+
+> **「おもろい」とは、個性が外から見えて輝いている状態である。**
+
+従来、「おもろい」は「楽しい」「嬉しい」といった感情と混同されてきた。しかし本理論において「おもろい」は感情ではなく**観察可能な状態**を指す。ある人が没入し、その人固有の個性が発揮され、周囲から見て輝いている---この客観的に観察できる状態こそが「おもろい」である。
+
+### Omoro Theoryの独自価値（USP）
+
+| 独自価値 | 内容 |
+|---------|------|
+| **状態起点アプローチ** | 「おもろい」という観察可能な状態を、再現可能な「没入パターン」として型化する |
+| **改革の両輪モデル** | 個人改革と組織改革を同時に回し、相互作用による持続的変革を実現する |
+| **Will/Can/Must統合** | やりたい・できる・求められるの三要素が重なる状態を意図的に設計する |
+
+### 理論的位置づけ
+
+Omoro Theoryは、フロー理論・自己決定理論・経験学習モデル等の既存理論を統合しながら、「個性が輝く状態を意図的に設計し、業務成果に接続する」という空白領域を埋める。これは従来のB2B研修が到達できなかった領域である。
+
+---
+
+## 1. 理論の背景と問題意識
+
+### 1.1 従来のB2B研修の限界
+
+従来のB2B研修は、以下の前提に立脚してきた。
+
+| 従来の前提 | 根底にある発想 | 生じる問題 |
+|-----------|---------------|-----------|
+| スキル欠損モデル | 「社員にはスキルが不足している」 | 受講者を「補われる側」に位置づけ、主体性を損なう |
+| 組織適応モデル | 「組織の要求に個人を適応させる」 | 個人の個性・強みが活かされない |
+| 知識注入モデル | 「知識を教えれば行動が変わる」 | 研修後の行動変容が起きない |
+| Must起点設計 | 「やるべきことを起点に設計する」 | やらされ感が生じ、効果が持続しない |
+
+これらの前提に基づく研修は、「研修直後は意識が高まるが、1週間で元に戻る」という現象を生み出してきた。企業は毎年多額の研修投資を行うが、その効果は一過性に留まり、持続的な行動変容には至らない。
+
+**問題の本質**: 従来の研修は「欠損を補う」発想に立っているため、受講者は「補われる側」として受動的な姿勢になる。この構造そのものが、研修効果の減衰を引き起こしている。
+
+### 1.2 「おもろい」という未開拓領域
+
+一方で、ビジネスの現場には以下の事実が存在する。
+
+- 同じ業務でも、ある人は没頭し、ある人は苦痛を感じる
+- 没入状態で働く人は、そうでない人より高い生産性を発揮する
+- 個性が発揮されている人は、周囲から見て「輝いて」見える
+
+この「個性が外から見えて輝いている状態」---すなわち「おもろい」状態---は、成果創出の強力なドライバーである。しかし、これまでの研修理論はこの状態を「測定困難」「主観的」として体系化の対象から外してきた。
+
+**Omoro Theoryの挑戦**: 「おもろい」という状態を、研修設計の起点として活用可能な形に変換する。具体的には、「おもろい」状態を「没入パターン」として型化し、業務での再現を可能にする。
+
+---
+
+## 2. 既存理論との比較分析
+
+### 2.1 ロジックツリー（5系譜）
+
+B2B研修分野における既存理論は、以下の5つの系譜に分類できる。
+
+\`\`\`mermaid
+graph TD
+    ROOT[B2B研修理論の体系]
+
+    ROOT --> A[1. 学習理論系]
+    ROOT --> B[2. 動機づけ理論系]
+    ROOT --> C[3. 組織開発系]
+    ROOT --> D[4. 能力開発モデル系]
+    ROOT --> E[5. ポジティブ心理学系]
+
+    A --> A1[成人学習理論<br/>Knowles]
+    A --> A2[経験学習サイクル<br/>Kolb]
+    A --> A3[変容学習<br/>Mezirow]
+
+    B --> B1[自己決定理論<br/>Deci & Ryan]
+    B --> B2[フロー理論<br/>Csikszentmihalyi]
+    B --> B3[内発的動機付け理論]
+
+    C --> C1[学習する組織<br/>Senge]
+    C --> C2[アクションラーニング<br/>Revans]
+
+    D --> D1[70:20:10モデル]
+    D --> D2[コンピテンシーモデル]
+    D --> D3[ストレングスベース]
+
+    E --> E1[PERMA理論<br/>Seligman]
+    E --> E2[エンゲージメント理論]
+    E --> E3[ジョブ・クラフティング]
+\`\`\`
+
+#### 各系譜の概要
+
+| 系譜 | 中核的主張 | 代表的理論 |
+|-----|----------|----------|
+| **学習理論系** | 成人は自己主導的に学び、経験を通じて概念化する | 経験学習サイクル（Kolb） |
+| **動機づけ理論系** | 自律性・有能感・関係性が内発的動機を高める | 自己決定理論（Deci & Ryan） |
+| **組織開発系** | 個人の学習と組織の学習は相互に影響する | 学習する組織（Senge） |
+| **能力開発モデル系** | 学習の70%は経験から、弱みより強みを伸ばす | ストレングスベース |
+| **ポジティブ心理学系** | 没頭・意味・達成がウェルビーイングを構成する | PERMA理論（Seligman） |
+
+### 2.2 主要理論との共通点
+
+Omoro Theoryは、既存理論の知見を統合的に活用する。
+
+| 既存理論 | Omoro Theoryとの接点 | 活用の仕方 |
+|----------|---------------------|-----------|
+| **フロー理論** | 没入状態の概念 | 偶発的なフローではなく「意図的に再現可能な没入パターン」として設計対象化 |
+| **自己決定理論** | 自律性・有能感・関係性 | Will/Can/Must統合フレームワークの学術的根拠 |
+| **経験学習サイクル** | 体験→内省→概念化→実践 | 「体験起点の気づき」の方法論的基盤 |
+| **ストレングスベース** | 強みを活かす発想 | 「強み」を「没入パターン」に置換し、より行動レベルで具体化 |
+| **PERMA理論** | Engagement（没頭） | 「おもろい」状態とウェルビーイングの接続 |
+| **学習する組織** | 個人と組織の相互作用 | 「改革の両輪」の理論的基盤 |
+| **ジョブ・クラフティング** | 仕事の再設計 | 「業務への転用設計」の具体的手法 |
+
+### 2.3 決定的差異（USP）の特定
+
+| 比較軸 | 既存理論 | Omoro Theory | 差異の本質 |
+|--------|----------|--------------|-----------|
+| **起点** | スキル/知識の不足（欠損モデル） | 「おもろい」という観察可能な状態（充足モデル） | 欠損 → 充足 |
+| **方向性** | 組織→個人（トップダウン適応） | 個人⇔組織（双方向接続） | 適応 → Alignment |
+| **変革対象** | 個人 OR 組織（どちらか一方） | 個人 AND 組織（両輪同時） | 部分最適 → 全体最適 |
+| **目標設定** | Must（やるべきこと）の遂行 | Will/Can/Mustの統合 | 義務 → 統合 |
+| **持続性** | 研修時のみ効果（一過性） | 自己再現可能（持続性） | 一過性 → 持続性 |
+| **フローの扱い** | 偶発的に生じる状態 | 意図的に設計・再現する状態 | 偶発 → 設計 |
+
+**Omoro Theoryの独自ポジション**: 「個人主導 × 状態起点 × 成果着地」を同時に満たす唯一の理論。既存理論の空白領域を埋める位置にある。
+
+---
+
+## 3. Omoro Theoryの理論体系
+
+### 3.1 Core Concept：「おもろい」状態の設計
+
+Omoro Theoryの核心は、**「おもろい」という観察可能な状態を、意図的に設計し、業務成果に接続する**ことにある。
+
+#### 「おもろい」の構造分析
+
+| 層 | 内容 | 説明 |
+|---|------|------|
+| **現象層** | 個性が外から見えて輝いている状態 | 観察可能な現象として定義 |
+| **行動層** | 没入パターン | 「おもろい」状態を引き起こす個人固有の行動条件 |
+| **手段層** | ゲーム・対話・心理的安全性 | 没入パターンを発見・発揮するための環境条件 |
+
+\`\`\`mermaid
+graph TB
+    subgraph Phenomenon["現象層：観察可能な状態"]
+        P1["「おもろい」状態<br/>= 個性が外から見えて輝いている"]
+    end
+
+    subgraph Behavior["行動層：再現可能なパターン"]
+        B1["没入パターン<br/>= この人が輝く条件の型"]
+    end
+
+    subgraph Means["手段層：環境条件"]
+        M1["ゲーム体験"]
+        M2["対話・内省"]
+        M3["心理的安全性"]
+    end
+
+    M1 --> B1
+    M2 --> B1
+    M3 --> B1
+    B1 --> P1
+\`\`\`
+
+#### 「おもろい」から「成果」への変換プロセス
+
+\`\`\`mermaid
+graph LR
+    A["「おもろい」状態<br/>（観察可能な現象）"]
+    B["没入パターン<br/>（型化された行動条件）"]
+    C["業務への転用<br/>（設計された適用）"]
+    D["成果<br/>（論理的帰結）"]
+
+    A --> B --> C --> D
+    D -->|"正のフィードバック"| A
+\`\`\`
+
+### 3.2 2本柱モデル（Individual × Organization）
+
+Omoro Theoryは、変革を**「個人（Individual）」と「組織（Organization）」の2本柱**で捉える。
+
+| 柱 | 焦点 | 問い |
+|---|------|------|
+| **Individual（個人）** | 個性の発見と活用 | 「この人はどうあれば輝くか？」 |
+| **Organization（組織）** | 環境の設計と整備 | 「組織はどうあれば個性を活かせるか？」 |
+
+従来の研修は個人のみ、あるいは組織のみに焦点を当てていた。Omoro Theoryは両者を統合的に扱う。
+
+### 3.3 改革の両輪モデル
+
+個人改革と組織改革は、**相互に連動する「両輪」**として同時に回す必要がある。
+
+\`\`\`mermaid
+graph TB
+    subgraph Individual["個人（Individual）の改革"]
+        I1["1. 個性の抽出<br/>人間的本質の発見"]
+        I2["2. 没入行動の特定<br/>輝く瞬間の型化"]
+        I3["3. 業務への統合<br/>Will/Can/Must"]
+        I1 --> I2 --> I3
+    end
+
+    subgraph Organization["組織（Organization）の改革"]
+        O1["1. 理念浸透<br/>個性が活きる方針"]
+        O2["2. 環境設計<br/>会議・配置の変革"]
+        O3["3. 状態目標<br/>全員が輝く × 成果"]
+        O1 --> O2 --> O3
+    end
+
+    I3 <-->|"Alignment<br/>（接続）"| O3
+\`\`\`
+
+#### 個人改革の3ステップ
+
+| ステップ | 目的 | 方法 | 成果物 |
+|----------|------|------|--------|
+| **1. 個性の抽出** | Job Description上のスキルではなく、「人間的な本質」を発見する | 過去の没入体験の振り返り、他者からのフィードバック | 個性プロファイル |
+| **2. 没入行動の特定** | 個性が活き、輝く瞬間を特定し、「型」として言語化する | ゲーム体験→観察→パターン抽出 | 没入パターンシート |
+| **3. 業務への統合** | 没入パターンを業務アクションに落とし込む | 没入パターン × 現業務のマッチング | アクションプラン |
+
+#### 組織改革の3ステップ
+
+| ステップ | 目的 | 方法 | 成果物 |
+|----------|------|------|--------|
+| **1. 理念浸透** | 個人の個性が活き、かつ成果に繋がる理念・方針を作り浸透させる | 経営層と現場のワークショップ | 理念ステートメント |
+| **2. 環境設計** | 会議の仕方や人員配置を変え、組織の方向と個人の個性を接続する | 組織診断、プロセス再設計 | 組織設計図 |
+| **3. 状態目標** | 全員が「おもろい」状態で成果を出せる状態を定義し、目指す | 状態指標の設計、モニタリング | 状態KPI |
+
+#### 両輪の連動原則
+
+1. **個人の没入パターンを発見しても、組織がそれを活かす環境を整えなければ成果に繋がらない**
+2. **組織が環境を整えても、個人が自分の没入パターンを理解していなければ活用できない**
+3. **両輪を同時に回すことで、初めて「おもろい × 成果」が実現する**
+
+### 3.4 Will/Can/Must統合フレームワーク
+
+Omoro Theoryの最終目標は、**Will（やりたい）/ Can（できる）/ Must（求められる）が重なる状態を意図的に設計する**ことである。
+
+\`\`\`mermaid
+graph TD
+    subgraph Integration["Will/Can/Must統合"]
+        W["Will<br/>やりたい<br/>（内発的動機）"]
+        C["Can<br/>できる<br/>（有能感）"]
+        M["Must<br/>求められる<br/>（組織要求）"]
+
+        WC["Will × Can<br/>楽しいが<br/>求められない"]
+        WM["Will × Must<br/>やりたいが<br/>できない"]
+        CM["Can × Must<br/>できるが<br/>やりたくない"]
+
+        WCM["Will × Can × Must<br/>【最適状態】<br/>おもろい × 成果"]
+    end
+
+    W --> WC
+    W --> WM
+    C --> WC
+    C --> CM
+    M --> WM
+    M --> CM
+
+    WC --> WCM
+    WM --> WCM
+    CM --> WCM
+\`\`\`
+
+#### 各状態の分析
+
+| 状態 | 説明 | 問題点 | 解決策 |
+|------|------|--------|--------|
+| **Will × Can のみ** | 楽しくて得意だが、組織から求められていない | 趣味止まり。評価されない | 組織側のMustを再定義、または活躍の場を創出 |
+| **Will × Must のみ** | やりたくて求められているが、スキルが不足 | 空回り。成果が出ない | Canの拡張（スキル習得）を支援 |
+| **Can × Must のみ** | 得意で求められているが、やりたくない | 燃え尽き。持続しない | Willとの接点を発見、業務の意味づけを変更 |
+| **Will × Can × Must** | やりたい・できる・求められるが重なる | **最適状態** | この状態を設計・維持する |
+
+---
+
+## 4. 学術的根拠と正当化
+
+### 4.1 フロー理論との接続と発展
+
+Csikszentmihalyiのフロー理論は、Omoro Theoryの「没入」概念の学術的基盤を提供する。
+
+| 観点 | フロー理論 | Omoro Theory | 発展のポイント |
+|------|-----------|--------------|---------------|
+| フローの発生 | 偶発的・状況依存的 | 意図的・設計可能 | 待つのではなく作り出す |
+| 対象 | 個人の心理状態の研究 | 個人と組織の変革実践 | 研究から実践へ |
+| 業務との接続 | 言及なし（学術研究） | 明示的に業務転用を設計 | 理論から応用へ |
+| 成果物 | フロー状態の理解 | 没入パターンシート、アクションプラン | 知見からツールへ |
+
+**Omoro Theoryの発展点**: フロー理論が「フローとは何か」を解明したのに対し、Omoro Theoryは「フローをどう作り出し、業務に活かすか」を設計する。
+
+### 4.2 自己決定理論との接続と発展
+
+Deci & Ryanの自己決定理論（SDT）は、内発的動機の三要素を提示している。
+
+| SDTの三欲求 | Omoro Theoryでの対応 | 発展のポイント |
+|-------------|---------------------|---------------|
+| **自律性（Autonomy）** | Will：やりたいことを自分で選べる | 欲求を「設計変数」として扱う |
+| **有能感（Competence）** | Can：できることで貢献できる | 業務との接続を明示化 |
+| **関係性（Relatedness）** | Must：組織・他者から求められる | 組織要求を統合対象に含める |
+
+**Omoro Theoryの発展点**: SDTが三欲求の「充足」を目指すのに対し、Omoro Theoryは三要素の「統合」を目指す。Will/Can/Mustが重なる状態を意図的に設計することで、内発的動機の最大化と組織成果の両立を実現する。
+
+### 4.3 経験学習理論との接続と発展
+
+Kolbの経験学習サイクルは、Omoro Theoryの「体験起点の気づき」の方法論的基盤を提供する。
+
+\`\`\`mermaid
+graph LR
+    A["具体的経験<br/>（ゲーム・ワーク）"]
+    B["内省的観察<br/>（振り返り）"]
+    C["抽象的概念化<br/>（没入パターン抽出）"]
+    D["能動的実験<br/>（業務への転用）"]
+    A --> B --> C --> D --> A
+\`\`\`
+
+**Omoro Theoryの発展点**: 経験学習サイクルを「没入パターン発見→業務転用」という独自の文脈で再構成。座学（抽象的概念）からではなく、体験（具体的経験）から始める設計を徹底している。
+
+### 4.4 ストレングスベースアプローチとの差異
+
+| 観点 | ストレングスベース | Omoro Theory | 差異 |
+|------|-------------------|--------------|------|
+| 発見対象 | 強み（Strength）= 資質・才能 | 没入パターン = 行動条件 | 資質 → 行動 |
+| 発見方法 | 診断ツール（34資質等） | ゲーム体験→内省→抽出 | 診断 → 体験 |
+| 具体性 | カテゴリ分類 | 個人固有の行動パターン記述 | 分類 → 記述 |
+| 業務接続 | 強みを活かせる役割に配置 | 没入パターンを業務アクションに転用 | 配置 → 転用 |
+
+**決定的差異**: ストレングスベースが「あなたの強みはこれです」と診断結果を提示するのに対し、Omoro Theoryは「あなたが輝く条件を自分で発見し、言語化する」ことを支援する。診断依存から自己発見への転換である。
+
+---
+
+## 5. 実践への応用
+
+### 5.1 個人改革の方法論
+
+個人改革は、以下の3つのワークを通じて実現する。
+
+| ワーク名 | 目的 | 方法 | 成果物 |
+|----------|------|------|--------|
+| **個性発見ワーク** | 人間的本質の言語化 | 過去の没入体験の振り返り、他者からのフィードバック収集 | 個性プロファイル |
+| **没入パターン抽出ワーク** | 輝く瞬間の型化 | ゲーム体験→観察→「何が、どうあったから輝けたか」を言語化 | 没入パターンシート |
+| **業務マッチングワーク** | Will/Can/Must統合 | 没入パターン × 現業務のマッチング分析 | アクションプラン |
+
+#### 没入パターンシートの構成例
+
+| 項目 | 記入内容 |
+|------|---------|
+| **状況（Situation）** | どのような状況で輝いていたか |
+| **条件（Condition）** | 何があったから輝けたか |
+| **行動（Behavior）** | 具体的にどのような行動を取っていたか |
+| **結果（Result）** | どのような成果・状態が生まれたか |
+| **再現条件（Reproduction）** | 業務で再現するために必要な条件 |
+
+### 5.2 組織改革の方法論
+
+組織改革は、以下の3つの施策を通じて実現する。
+
+| 施策名 | 目的 | 方法 | 成果物 |
+|--------|------|------|--------|
+| **理念再設計** | 個性が活きる方針の策定 | 経営層と現場のワークショップ | 理念ステートメント |
+| **環境リデザイン** | 個人×組織の接続 | 会議体の見直し、人員配置の最適化、心理的安全性の確保 | 組織設計図 |
+| **状態KPI設定** | ゴール状態の定義 | 「おもろい」状態の測定指標設計 | 状態KPIダッシュボード |
+
+#### 状態KPIの例
+
+| KPI | 測定方法 | 目標値設定の考え方 |
+|-----|---------|-------------------|
+| **没入時間率** | 業務中に没入状態にあった時間の割合（自己申告＋上司観察） | 現状+10%を目標に段階的向上 |
+| **没入パターン活用率** | 発見した没入パターンを業務で意識的に活用した頻度 | 週1回以上の活用を基準 |
+| **個性発揮実感度** | 「自分らしさを発揮できている」の実感度（自己5段階＋他者評価） | 4以上を目標 |
+
+> **測定のポイント**: 「おもろい」は「外から見えて輝いている状態」であるため、自己申告に加えて上司・同僚からの観察評価を併用することを推奨する。
+
+### 5.3 両輪の連動メカニズム
+
+\`\`\`mermaid
+graph TB
+    subgraph Cycle["両輪の連動サイクル"]
+        I["個人：没入パターン発見"]
+        O["組織：環境設計"]
+        A["Alignment<br/>（個人×組織の接続）"]
+        R["成果の創出"]
+        F["フィードバック"]
+
+        I --> A
+        O --> A
+        A --> R
+        R --> F
+        F --> I
+        F --> O
+    end
+\`\`\`
+
+### 5.4 手段としてのゲーム・対話・心理的安全性
+
+「おもろい」状態を引き出し、没入パターンを発見するための手段として、以下の3要素を活用する。
+
+| 手段 | 役割 | 設計のポイント |
+|------|------|---------------|
+| **ゲーム体験** | 没入状態を意図的に生成する | 適切な難易度設定、即時フィードバック、明確な目標 |
+| **対話・内省** | 没入体験を言語化する | 「何が、どうあったから輝けたか」を問う問いかけ |
+| **心理的安全性** | 個性の発揮を可能にする | 失敗を許容する場づくり、相互尊重の文化 |
+
+---
+
+## 6. 結論
+
+### 6.1 理論的貢献
+
+Omoro Theoryは、B2B研修理論に以下の貢献をもたらす。
+
+| 貢献 | 内容 |
+|------|------|
+| **状態の設計化** | 「おもろい」という観察可能な状態を、「没入パターン」という再現可能な概念に変換 |
+| **統合フレームワーク** | Will/Can/Mustの統合という、個人と組織の両方を満たす目標設定 |
+| **両輪モデル** | 個人改革と組織改革の同時進行による、持続的変革の実現 |
+| **空白領域の充填** | 「個人主導 × 状態起点 × 成果着地」という既存理論の空白を埋める |
+
+### 6.2 実践的価値
+
+企業にとってのOmoro Theoryの価値は以下の通りである。
+
+| 観点 | 従来の研修 | Omoro Theory適用後 |
+|------|----------|-------------------|
+| **受講者の姿勢** | 「補われる側」として受動的 | 「発見する側」として主体的 |
+| **研修効果の持続性** | 1週間で減衰 | 自己再現可能で持続 |
+| **組織成果への接続** | 不明確 | Will/Can/Must統合により明確化 |
+| **投資対効果** | 測定困難 | 状態KPIにより測定可能 |
+
+### 6.3 Omoro Theoryの定義
+
+> **Omoro Theory（オモロ理論）とは、「おもろい」---すなわち個性が外から見えて輝いている状態---を「没入パターン」として型化し、個人と組織の両輪改革を通じて、個性を発揮しながら成果を出す状態を意図的に設計する理論体系である。**
+
+### 6.4 今後の展望
+
+Omoro Theoryは、以下の方向で発展を続ける。
+
+1. **測定手法の精緻化**: 「おもろい」状態をより客観的に測定する手法の開発
+2. **業界別適用事例の蓄積**: 様々な業界・職種での適用事例の蓄積と体系化
+3. **組織文化変革への拡張**: 研修を超えた組織文化変革プログラムへの発展
+4. **テクノロジー活用**: AI・データ分析を活用した没入パターン発見支援
+
+---
+
+## 参考文献
+
+- Csikszentmihalyi, M. (1990). *Flow: The Psychology of Optimal Experience*. Harper & Row.
+- Deci, E. L., & Ryan, R. M. (2000). The "what" and "why" of goal pursuits: Human needs and the self-determination of behavior. *Psychological Inquiry*, 11(4), 227-268.
+- Kolb, D. A. (1984). *Experiential Learning: Experience as the Source of Learning and Development*. Prentice-Hall.
+- Knowles, M. S. (1980). *The Modern Practice of Adult Education: From Pedagogy to Andragogy*. Cambridge Adult Education.
+- Senge, P. M. (1990). *The Fifth Discipline: The Art and Practice of the Learning Organization*. Doubleday.
+- Seligman, M. E. P. (2011). *Flourish: A Visionary New Understanding of Happiness and Well-being*. Free Press.
+- Wrzesniewski, A., & Dutton, J. E. (2001). Crafting a job: Revisioning employees as active crafters of their work. *Academy of Management Review*, 26(2), 179-201.
+`;
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+
+        // Custom renderer for Mermaid
+        const renderer = new marked.Renderer();
+
+        renderer.code = function(code, language) {
+            if (language === 'mermaid') {
+                return '<div class="mermaid">' + code + '</div>';
+            }
+            return '<pre><code class="language-' + language + '">' +
+                   code.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
+                   '</code></pre>';
+        };
+
+        // Configure marked
+        marked.setOptions({
+            renderer: renderer,
+            gfm: true,
+            breaks: false,
+            pedantic: false,
+            sanitize: false,
+            smartLists: true,
+            smartypants: false
+        });
+
+        // Render markdown
+        document.getElementById('content').innerHTML = marked.parse(markdown);
+
+        // Render Mermaid diagrams
+        mermaid.run();
+    </script>
+</body>
+</html>
