@@ -21,6 +21,7 @@
 
 ### 利用可能なサブエージェント
 
+#### 事業開発系
 | スキル名 | 役割 | 呼び出し方 |
 |---------|------|-----------|
 | `/market-researcher` | 市場調査・競合分析 | 市場動向、競合情報の収集・分析 |
@@ -28,6 +29,16 @@
 | `/proposal-writer` | 提案書・企画書作成 | 営業資料、提案書の作成 |
 | `/reviewer` | 品質レビュー | 成果物のレビュー・改善提案 |
 | `/business-planner` | 事業計画策定 | 収益計画、KPI設計 |
+
+#### 理論体系化系（Theory Framework）
+| スキル名 | 役割 | 呼び出し方 |
+|---------|------|-----------|
+| `/theory-researcher` | 理論リサーチャー | 既存理論の網羅的調査・整理 |
+| `/logic-designer` | ロジックデザイナー | ロジックツリー・Gap Analysis作成 |
+| `/framework-architect` | フレームワーク作家 | 独自理論体系の構築・学術的補強 |
+| `/business-writer` | ビジネスライター | 経営層向け本文テキスト執筆 |
+| `/diagram-designer` | 図解デザイナー | Mermaid図による概念の可視化 |
+| `/editor-in-chief` | 編集長 | 最終品質チェック・論理整合性検証 |
 
 ### オーケストレーション原則
 
@@ -68,6 +79,18 @@
 1. /market-researcher → 顧客業界の調査
 2. /proposal-writer → 提案書ドラフト作成
 3. /reviewer → レビュー・改善
+```
+
+### 理論体系化（Theory Framework）
+```
+Phase 1: /theory-researcher + /logic-designer（並列実行）
+  → 既存理論リサーチ + Gap Analysis
+Phase 2: /framework-architect
+  → 独自理論体系構築・学術的補強
+Phase 3: /business-writer + /diagram-designer（並列実行）
+  → 本文執筆 + Mermaid図作成
+Phase 4: /editor-in-chief
+  → 最終品質チェック
 ```
 
 ---
