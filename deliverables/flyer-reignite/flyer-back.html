@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Re:ignite研修 チラシ（裏面）</title>
+  <style>
+    /* ============================================
+       印刷・PDF用設定
+    ============================================ */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ============================================
+       カラーパレット（表面と統一）
+    ============================================ */
+    :root {
+      --color-base: #ffffff;
+      --color-base-alt: #f8f9fa;
+      --color-main: #1a365d;
+      --color-main-light: #2c5282;
+      --color-accent: #dd6b20;
+      --color-accent-light: #ed8936;
+      --color-text: #2d3748;
+      --color-text-light: #4a5568;
+      --color-border: #e2e8f0;
+      --color-gray: #718096;
+    }
+
+    /* ============================================
+       ベーススタイル
+    ============================================ */
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      font-size: 10pt;
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-base);
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      padding: 10mm 15mm;
+      background: var(--color-base);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ============================================
+       Why You セクション
+    ============================================ */
+    .why-you {
+      margin-bottom: 4mm;
+      padding: 4mm;
+      background: var(--color-base-alt);
+      border-radius: 3mm;
+      border-left: 4px solid var(--color-accent);
+    }
+
+    .why-you-title {
+      font-size: 13pt;
+      font-weight: bold;
+      color: var(--color-main);
+      margin-bottom: 2mm;
+    }
+
+    .why-you-subtitle {
+      font-size: 10pt;
+      color: var(--color-text-light);
+      margin-bottom: 3mm;
+    }
+
+    .why-you-text {
+      font-size: 9pt;
+      line-height: 1.7;
+    }
+
+    .why-you-text .highlight {
+      color: var(--color-accent);
+      font-weight: bold;
+    }
+
+    /* ============================================
+       2カラム：強み vs 代替法
+    ============================================ */
+    .two-column {
+      display: flex;
+      gap: 4mm;
+      margin-bottom: 4mm;
+    }
+
+    .column {
+      flex: 1;
+      padding: 4mm;
+      border-radius: 3mm;
+    }
+
+    .column.strength {
+      background: #f0fff4;
+      border: 1px solid #9ae6b4;
+    }
+
+    .column.alternative {
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+    }
+
+    .column-title {
+      font-size: 10pt;
+      font-weight: bold;
+      margin-bottom: 3mm;
+      padding-bottom: 2mm;
+      border-bottom: 1px solid currentColor;
+    }
+
+    .column.strength .column-title {
+      color: #276749;
+    }
+
+    .column.alternative .column-title {
+      color: #c53030;
+    }
+
+    .strength-item {
+      margin-bottom: 3mm;
+    }
+
+    .strength-item-title {
+      font-size: 9pt;
+      font-weight: bold;
+      color: var(--color-main);
+      margin-bottom: 1mm;
+    }
+
+    .strength-item-title .num {
+      display: inline-block;
+      width: 5mm;
+      height: 5mm;
+      background: var(--color-accent);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 5mm;
+      font-size: 8pt;
+      margin-right: 2mm;
+    }
+
+    .strength-item-desc {
+      font-size: 8pt;
+      color: var(--color-text-light);
+      padding-left: 7mm;
+    }
+
+    .alternative-item {
+      margin-bottom: 2mm;
+      padding: 2mm;
+      background: rgba(255,255,255,0.7);
+      border-radius: 2mm;
+    }
+
+    .alternative-item-title {
+      font-size: 8.5pt;
+      font-weight: bold;
+      color: #c53030;
+    }
+
+    .alternative-item-desc {
+      font-size: 8pt;
+      color: var(--color-text-light);
+    }
+
+    /* ============================================
+       変化のストーリー
+    ============================================ */
+    .story-section {
+      margin-bottom: 4mm;
+    }
+
+    .section-title {
+      font-size: 11pt;
+      font-weight: bold;
+      color: var(--color-main);
+      margin-bottom: 3mm;
+      padding-bottom: 2mm;
+      border-bottom: 2px solid var(--color-main);
+    }
+
+    .story-container {
+      display: flex;
+      gap: 3mm;
+      align-items: stretch;
+    }
+
+    .story-box {
+      flex: 1;
+      padding: 3mm;
+      border-radius: 3mm;
+      font-size: 8pt;
+    }
+
+    .story-box.before {
+      background: #edf2f7;
+      border: 1px solid #cbd5e0;
+    }
+
+    .story-box.insight {
+      background: #faf5ff;
+      border: 1px solid #d6bcfa;
+    }
+
+    .story-box.after {
+      background: #f0fff4;
+      border: 1px solid #9ae6b4;
+    }
+
+    .story-label {
+      font-size: 8pt;
+      font-weight: bold;
+      margin-bottom: 2mm;
+      padding: 1mm 2mm;
+      border-radius: 2mm;
+      display: inline-block;
+    }
+
+    .story-box.before .story-label {
+      background: #a0aec0;
+      color: white;
+    }
+
+    .story-box.insight .story-label {
+      background: #9f7aea;
+      color: white;
+    }
+
+    .story-box.after .story-label {
+      background: #48bb78;
+      color: white;
+    }
+
+    .story-persona {
+      font-size: 7.5pt;
+      color: var(--color-gray);
+      margin-bottom: 2mm;
+    }
+
+    .story-quote {
+      font-size: 8pt;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .story-arrow {
+      display: flex;
+      align-items: center;
+      font-size: 14pt;
+      color: var(--color-accent);
+      padding: 0 1mm;
+    }
+
+    .story-note {
+      font-size: 7pt;
+      color: var(--color-gray);
+      text-align: right;
+      margin-top: 2mm;
+    }
+
+    /* ============================================
+       導入フロー
+    ============================================ */
+    .flow-section {
+      margin-bottom: 4mm;
+    }
+
+    .flow-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: var(--color-base-alt);
+      padding: 4mm;
+      border-radius: 3mm;
+    }
+
+    .flow-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2mm;
+    }
+
+    .flow-step-num {
+      width: 7mm;
+      height: 7mm;
+      background: var(--color-main);
+      color: white;
+      border-radius: 50%;
+      font-size: 9pt;
+      font-weight: bold;
+      line-height: 7mm;
+    }
+
+    .flow-step-name {
+      font-size: 9pt;
+      font-weight: bold;
+      color: var(--color-main);
+      margin-bottom: 1mm;
+    }
+
+    .flow-step-duration {
+      font-size: 7.5pt;
+      color: var(--color-accent);
+      font-weight: bold;
+      margin-bottom: 1mm;
+    }
+
+    .flow-step-desc {
+      font-size: 7pt;
+      color: var(--color-text-light);
+      line-height: 1.4;
+    }
+
+    .flow-connector {
+      color: var(--color-accent);
+      font-size: 12pt;
+      padding-top: 2mm;
+    }
+
+    /* ============================================
+       プロフィール & メッセージ
+    ============================================ */
+    .profile-section {
+      display: flex;
+      gap: 4mm;
+      margin-bottom: 4mm;
+      padding: 4mm;
+      background: var(--color-base-alt);
+      border-radius: 3mm;
+    }
+
+    .profile-left {
+      width: 55mm;
+    }
+
+    .profile-photo {
+      width: 25mm;
+      height: 30mm;
+      background: #e2e8f0;
+      border-radius: 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray);
+      font-size: 8pt;
+      margin-bottom: 2mm;
+    }
+
+    .profile-name {
+      font-size: 10pt;
+      font-weight: bold;
+      color: var(--color-main);
+    }
+
+    .profile-title {
+      font-size: 8pt;
+      color: var(--color-text-light);
+      margin-bottom: 2mm;
+    }
+
+    .profile-career {
+      font-size: 7pt;
+      color: var(--color-gray);
+      line-height: 1.5;
+    }
+
+    .profile-right {
+      flex: 1;
+    }
+
+    .message-title {
+      font-size: 10pt;
+      font-weight: bold;
+      color: var(--color-main);
+      margin-bottom: 2mm;
+    }
+
+    .message-text {
+      font-size: 8.5pt;
+      line-height: 1.7;
+    }
+
+    .message-text .emphasis {
+      color: var(--color-accent);
+      font-weight: bold;
+    }
+
+    /* ============================================
+       価格・オファー
+    ============================================ */
+    .offer-section {
+      margin-bottom: 4mm;
+    }
+
+    .offer-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+    }
+
+    .offer-table th,
+    .offer-table td {
+      padding: 2mm 3mm;
+      border: 1px solid var(--color-border);
+    }
+
+    .offer-table th {
+      background: var(--color-main);
+      color: white;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .offer-table td {
+      background: white;
+    }
+
+    .offer-table .plan-name {
+      font-weight: bold;
+      color: var(--color-main);
+    }
+
+    .offer-table .price {
+      color: var(--color-accent);
+      font-weight: bold;
+      font-size: 10pt;
+    }
+
+    .offer-note {
+      font-size: 7pt;
+      color: var(--color-gray);
+      margin-top: 2mm;
+    }
+
+    /* ============================================
+       CTA（再掲）
+    ============================================ */
+    .cta-section {
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+      color: white;
+      border-radius: 4mm;
+      padding: 4mm;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+    }
+
+    .cta-left {
+      flex: 1;
+    }
+
+    .cta-title {
+      font-size: 11pt;
+      font-weight: bold;
+      margin-bottom: 2mm;
+    }
+
+    .cta-text {
+      font-size: 8.5pt;
+      opacity: 0.95;
+    }
+
+    .cta-right {
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+    }
+
+    .cta-qr {
+      width: 22mm;
+      height: 22mm;
+      background: white;
+      border-radius: 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray);
+      font-size: 7pt;
+    }
+
+    .cta-contacts {
+      font-size: 8pt;
+    }
+
+    .cta-contact-item {
+      margin-bottom: 1mm;
+    }
+
+    /* ============================================
+       フッター
+    ============================================ */
+    .footer {
+      position: absolute;
+      bottom: 8mm;
+      left: 15mm;
+      right: 15mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 3mm;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .footer-logo {
+      font-size: 14pt;
+      font-weight: bold;
+      color: var(--color-main);
+    }
+
+    .footer-info {
+      font-size: 7pt;
+      color: var(--color-gray);
+      text-align: right;
+    }
+
+    /* ============================================
+       印刷時の調整
+    ============================================ */
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Why You -->
+    <div class="why-you">
+      <div class="why-you-title">「切れない」「でも、このままじゃ困る」</div>
+      <div class="why-you-subtitle">——その社員、諦めるのはまだ早い</div>
+      <div class="why-you-text">
+        ベテランや燻っている中堅を「問題社員」として扱っていませんか？
+        彼らにも、かつて夢中だった時期があったはずです。
+        火を消したのが「環境」なら、環境を変えれば再び燃える。
+        火を消したのが「思い込み」なら、<span class="highlight">気づけば再び燃える</span>。
+      </div>
+    </div>
+
+    <!-- 2カラム -->
+    <div class="two-column">
+      <div class="column strength">
+        <div class="column-title">irodori研修の特徴</div>
+        <div class="strength-item">
+          <div class="strength-item-title"><span class="num">1</span>没入起点</div>
+          <div class="strength-item-desc">「何ができるか」ではなく「いつ夢中になるか」から入る。だから本人が納得する。</div>
+        </div>
+        <div class="strength-item">
+          <div class="strength-item-title"><span class="num">2</span>業務接続</div>
+          <div class="strength-item-desc">発見した没入パターンを「明日からの業務」に落とす。研修で終わらない。</div>
+        </div>
+        <div class="strength-item">
+          <div class="strength-item-title"><span class="num">3</span>体験設計</div>
+          <div class="strength-item-desc">講師が教えるのではなく、ワークで本人が気づく。押し付けないから、変わる。</div>
+        </div>
+      </div>
+      <div class="column alternative">
+        <div class="column-title">他の方法ではダメな理由</div>
+        <div class="alternative-item">
+          <div class="alternative-item-title">【説教・叱責】</div>
+          <div class="alternative-item-desc">「やる気を出せ」は逆効果。反発か、表面的な服従しか生まない。</div>
+        </div>
+        <div class="alternative-item">
+          <div class="alternative-item-title">【配置転換】</div>
+          <div class="alternative-item-desc">環境を変えても、本人が変わらなければ同じことの繰り返し。</div>
+        </div>
+        <div class="alternative-item">
+          <div class="alternative-item-title">【一般的な研修】</div>
+          <div class="alternative-item-desc">「新しい知識」を入れても、ベテランは「知ってる」で終わる。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 変化のストーリー -->
+    <div class="story-section">
+      <div class="section-title">研修で期待される変化</div>
+      <div class="story-container">
+        <div class="story-box before">
+          <div class="story-label">Before</div>
+          <div class="story-persona">大森さん（54歳・製造部・勤続32年）</div>
+          <div class="story-quote">
+            「俺はもういいよ。若い奴に任せるわ」<br>
+            「新しいやり方？ 俺は今のままでいい」<br>
+            「定年まであと6年、波風立てずに...」
+          </div>
+        </div>
+        <div class="story-arrow">→</div>
+        <div class="story-box insight">
+          <div class="story-label">研修での気づき</div>
+          <div class="story-quote">
+            「30代の頃、新しい加工方法を誰より早く試してたな...」<br>
+            「"誰もやってないこと"をやるのが楽しかったんだ」<br>
+            「今、それって何だろう...」
+          </div>
+        </div>
+        <div class="story-arrow">→</div>
+        <div class="story-box after">
+          <div class="story-label">After</div>
+          <div class="story-quote">
+            「若手に"俺の失敗談"を話すようになった」<br>
+            「新設備の導入PJ、俺がリーダーやるよ」<br>
+            「定年までの6年、"仕上げ"にしたい」
+          </div>
+        </div>
+      </div>
+      <div class="story-note">※上記は研修で期待される変化のイメージです。実際の効果は個人・組織によって異なります。</div>
+    </div>
+
+    <!-- 導入フロー -->
+    <div class="flow-section">
+      <div class="section-title">導入までの5ステップ</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-header"><div class="flow-step-num">1</div></div>
+          <div class="flow-step-name">無料相談</div>
+          <div class="flow-step-duration">30分</div>
+          <div class="flow-step-desc">「あの社員」の話を<br>聞かせてください</div>
+        </div>
+        <div class="flow-connector">→</div>
+        <div class="flow-step">
+          <div class="flow-step-header"><div class="flow-step-num">2</div></div>
+          <div class="flow-step-name">診断</div>
+          <div class="flow-step-duration">2週間</div>
+          <div class="flow-step-desc">「輝いていた時期」を<br>調査・分析</div>
+        </div>
+        <div class="flow-connector">→</div>
+        <div class="flow-step">
+          <div class="flow-step-header"><div class="flow-step-num">3</div></div>
+          <div class="flow-step-name">設計</div>
+          <div class="flow-step-duration">1週間</div>
+          <div class="flow-step-desc">御社専用の<br>プログラム設計</div>
+        </div>
+        <div class="flow-connector">→</div>
+        <div class="flow-step">
+          <div class="flow-step-header"><div class="flow-step-num">4</div></div>
+          <div class="flow-step-name">研修</div>
+          <div class="flow-step-duration">1日×2回</div>
+          <div class="flow-step-desc">没入パターン<br>再発見ワーク</div>
+        </div>
+        <div class="flow-connector">→</div>
+        <div class="flow-step">
+          <div class="flow-step-header"><div class="flow-step-num">5</div></div>
+          <div class="flow-step-name">定着</div>
+          <div class="flow-step-duration">1ヶ月</div>
+          <div class="flow-step-desc">現場実践＆<br>成果共有会</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- プロフィール & メッセージ -->
+    <div class="profile-section">
+      <div class="profile-left">
+        <div class="profile-photo">[写真]</div>
+        <div class="profile-name">[代表者名]</div>
+        <div class="profile-title">irodori 代表</div>
+        <div class="profile-career">
+          ・〇〇株式会社 人材開発部門（〇年）<br>
+          ・〇〇名以上の研修を設計・実施<br>
+          ・専門：組織開発／没入研究／体験学習
+        </div>
+      </div>
+      <div class="profile-right">
+        <div class="message-title">メッセージ</div>
+        <div class="message-text">
+          「やる気がない社員」は、本当に「やる気がない」のでしょうか。<br><br>
+          私はそう問い直すところから始めます。
+          多くの場合、「やる気がない」のではなく、<span class="emphasis">「やる気の出し方を忘れた」だけ</span>です。<br><br>
+          かつて夢中だった頃の自分を思い出し、その没入パターンを今の仕事で再現する。
+          それだけで、人は変わります。<br><br>
+          <span class="emphasis">諦めるのは、まだ早い。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 価格 -->
+    <div class="offer-section">
+      <div class="section-title">料金プラン</div>
+      <table class="offer-table">
+        <tr>
+          <th style="width: 30%;">プラン</th>
+          <th style="width: 45%;">内容</th>
+          <th style="width: 25%;">価格（税別）</th>
+        </tr>
+        <tr>
+          <td class="plan-name">Re:ignite スタンダード</td>
+          <td>診断＋研修2日＋定着1ヶ月</td>
+          <td class="price">80〜120万円</td>
+        </tr>
+        <tr>
+          <td class="plan-name">Re:ignite ライト</td>
+          <td>研修1日のみ</td>
+          <td class="price">30〜50万円</td>
+        </tr>
+        <tr>
+          <td class="plan-name">Re:ignite カスタム</td>
+          <td>複数拠点・対象者多数の場合</td>
+          <td class="price">要相談</td>
+        </tr>
+      </table>
+      <div class="offer-note">※参加人数・カスタマイズ内容により変動します。まずは無料相談で御社の状況をお聞かせください。</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="cta-left">
+        <div class="cta-title">まずは30分の無料相談から</div>
+        <div class="cta-text">「研修が必要かどうか分からない」そんな状態で構いません。<br>御社の課題を整理するところから、一緒に始めましょう。</div>
+      </div>
+      <div class="cta-right">
+        <div class="cta-qr">[QRコード]</div>
+        <div class="cta-contacts">
+          <div class="cta-contact-item">📞 03-XXXX-XXXX</div>
+          <div class="cta-contact-item">✉️ contact@irodori.com</div>
+          <div class="cta-contact-item">🌐 irodori.com/contact</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- フッター -->
+    <div class="footer">
+      <div class="footer-logo">irodori</div>
+      <div class="footer-info">
+        〒XXX-XXXX 東京都〇〇区〇〇 X-X-X<br>
+        https://irodori.com
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
